@@ -1,7 +1,7 @@
 package com.xatu.onlineedu.controller;
 
 
-import com.xatu.onlineedu.Result;
+import com.xatu.onlineedu.result.Result;
 import com.xatu.onlineedu.service.EduOssService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.xatu.onlineedu;
+package com.xatu.onlineedu.result;
 
 public interface ResultCode {
     //成功

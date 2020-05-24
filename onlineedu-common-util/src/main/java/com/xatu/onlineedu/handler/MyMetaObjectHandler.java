@@ -1,4 +1,4 @@
-package com.xatu.onlineedu;
+package com.xatu.onlineedu.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;

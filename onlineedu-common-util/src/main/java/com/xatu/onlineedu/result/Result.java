@@ -1,4 +1,4 @@
-package com.xatu.onlineedu;
+package com.xatu.onlineedu.result;
 
 import java.util.HashMap;
 import java.util.Map;

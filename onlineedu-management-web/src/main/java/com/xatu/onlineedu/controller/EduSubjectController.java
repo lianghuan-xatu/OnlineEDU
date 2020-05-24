@@ -1,15 +1,14 @@
 package com.xatu.onlineedu.controller;
 
 
-import com.xatu.onlineedu.Result;
+import com.xatu.onlineedu.result.Result;
+import com.xatu.onlineedu.entity.subject.OneSubject;
 import com.xatu.onlineedu.service.EduSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * <p>
@@ -19,10 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
  * @author LiangHuan
  * @since 2020-05-16
  */
-@Controller
+@RestController
 @RequestMapping("/eduSubject")
 @CrossOrigin
-@ResponseBody
 public class EduSubjectController {
 
     @Autowired
@@ -35,6 +33,13 @@ public class EduSubjectController {
         //上传过来excel文件
         eduSubjectService.saveFile(file,eduSubjectService);
         return Result.success();
+    }
+
+
+    @GetMapping("/getAllSubject")
+    public Result getAllSubject(){
+        List<OneSubject> list =eduSubjectService.getAllOneTwoSubject();
+        return Result.success().data("list",list);
     }
 
 }

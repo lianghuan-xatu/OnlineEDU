@@ -1,6 +1,6 @@
 package com.xatu.onlineedu.controller;
 
-import com.xatu.onlineedu.Result;
+import com.xatu.onlineedu.result.Result;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

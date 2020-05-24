@@ -1,8 +1,11 @@
 package com.xatu.onlineedu.controller;
 
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.xatu.onlineedu.result.Result;
+import com.xatu.onlineedu.entity.vo.CourseVo;
+import com.xatu.onlineedu.service.EduCourseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -12,9 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author LiangHuan
  * @since 2020-05-16
  */
-@Controller
-@RequestMapping("/onlineedu/eduCourse")
+@RestController
+@RequestMapping("/eduCourse")
 public class EduCourseController {
+    @Autowired
+    EduCourseService eduCourseService;
+
+    @PostMapping("/saveCourseInfo")
+    public Result saveCourseInfo(@RequestBody CourseVo courseInfo){
+        String courseId = eduCourseService.saveCourseInfo(courseInfo);
+        return Result.success().data("courseId",courseId);
+    }
+
+
 
 }
 

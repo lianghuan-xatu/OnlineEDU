@@ -3,7 +3,7 @@ package com.xatu.onlineedu.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xatu.onlineedu.Result;
+import com.xatu.onlineedu.result.Result;
 import com.xatu.onlineedu.entity.EduTeacher;
 import com.xatu.onlineedu.entity.vo.TeacherQuery;
 import com.xatu.onlineedu.service.EduTeacherService;
