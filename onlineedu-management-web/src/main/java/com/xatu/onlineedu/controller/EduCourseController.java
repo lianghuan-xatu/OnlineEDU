@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/eduCourse")
+@CrossOrigin
 public class EduCourseController {
     @Autowired
     EduCourseService eduCourseService;

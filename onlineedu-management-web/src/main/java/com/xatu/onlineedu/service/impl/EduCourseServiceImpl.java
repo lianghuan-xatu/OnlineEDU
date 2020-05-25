@@ -3,8 +3,8 @@ package com.xatu.onlineedu.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xatu.onlineedu.entity.EduCourse;
 import com.xatu.onlineedu.entity.EduCourseDescription;
-import com.xatu.onlineedu.exception.EduException;
 import com.xatu.onlineedu.entity.vo.CourseVo;
+import com.xatu.onlineedu.exception.EduException;
 import com.xatu.onlineedu.mapper.EduCourseMapper;
 import com.xatu.onlineedu.service.EduCourseDescriptionService;
 import com.xatu.onlineedu.service.EduCourseService;
@@ -31,6 +31,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public String saveCourseInfo(CourseVo courseInfoForm)  {
         EduCourse eduCourse = new EduCourse();
         BeanUtils.copyProperties(courseInfoForm,eduCourse);
+        eduCourse.setIsDeleted(0);
         int insert = eduCourseMapper.insert(eduCourse);
         if(insert==0){
             throw new EduException(2001,"课程插入失败");

@@ -119,6 +119,16 @@ public class EduTeacherController {
         eduTeacherService.updateById(teacher);
         return Result.success();
     }
+    /**
+     * 获取所有讲师
+     */
+    @GetMapping("/getAllTeacher")
+    @ResponseBody
+    public Result getAllTeacher(){
+        List<EduTeacher> list = eduTeacherService.list(null);
+        return Result.success().data("teacherList",list);
+    }
+
 
 
 

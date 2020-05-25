@@ -3,6 +3,7 @@ package com.xatu.onlineedu.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xatu.onlineedu.entity.EduComment;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2020-05-18
  */
 @Mapper
+@Repository
 public interface EduCommentMapper extends BaseMapper<EduComment> {
 
 }

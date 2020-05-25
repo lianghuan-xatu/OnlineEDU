@@ -1,8 +1,13 @@
 package com.xatu.onlineedu.controller;
 
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.xatu.onlineedu.entity.vo.ChapterVo;
+import com.xatu.onlineedu.result.Result;
+import com.xatu.onlineedu.service.EduChapterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,9 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author LiangHuan
  * @since 2020-05-16
  */
-@Controller
-@RequestMapping("/onlineedu/eduChapter")
+@RestController
+@RequestMapping("/eduChapter")
+@CrossOrigin
 public class EduChapterController {
+
+    @Autowired
+    EduChapterService eduChapterService;
+
+    @GetMapping("/getNestedList/{courseId}")
+    public Result getNestedListByCourseId(@PathVariable String courseId){
+        List<ChapterVo> chapterList = eduChapterService.getNestedListByCourseId(courseId);
+        return Result.success().data("items",chapterList);
+    };
 
 }
 

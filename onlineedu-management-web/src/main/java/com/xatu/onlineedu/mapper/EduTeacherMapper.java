@@ -1,18 +1,20 @@
 package com.xatu.onlineedu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xatu.onlineedu.entity.EduSubject;
+import com.xatu.onlineedu.entity.EduTeacher;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
- * 课程科目 Mapper 接口
+ * 讲师 Mapper 接口
  * </p>
  *
  * @author LiangHuan
  * @since 2020-05-18
  */
 @Mapper
-public interface EduSubjectMapper extends BaseMapper<EduSubject> {
+@Repository
+public interface EduTeacherMapper extends BaseMapper<EduTeacher> {
 
 }

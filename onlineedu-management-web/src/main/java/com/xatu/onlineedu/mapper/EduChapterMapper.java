@@ -1,8 +1,9 @@
 package com.xatu.onlineedu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xatu.onlineedu.entity.EduCourse;
+import com.xatu.onlineedu.entity.EduChapter;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2020-05-18
  */
 @Mapper
-public interface EduCourseMapper extends BaseMapper<EduCourse> {
+@Repository
+public interface EduChapterMapper extends BaseMapper<EduChapter> {
 
 }
