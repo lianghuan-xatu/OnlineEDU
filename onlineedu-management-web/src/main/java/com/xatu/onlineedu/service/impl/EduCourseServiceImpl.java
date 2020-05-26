@@ -1,5 +1,7 @@
 package com.xatu.onlineedu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xatu.onlineedu.entity.EduCourse;
 import com.xatu.onlineedu.entity.EduCourseDescription;
@@ -43,6 +45,36 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         String description = courseInfoForm.getDescription();
         eduCourseDescription.setDescription(description);
         eduCourseDescriptionService.save(eduCourseDescription);
+        return eduCourse.getId();
+    }
+
+    @Override
+    public CourseVo getCoursInfoByCourseId(String courseId) {
+        EduCourse eduCourse = eduCourseMapper.selectById(courseId);
+        EduCourseDescription eduCourseDescription = eduCourseDescriptionService.getOne(new QueryWrapper<EduCourseDescription>().eq("id", courseId));
+        CourseVo courseVo = new CourseVo();
+        BeanUtils.copyProperties(eduCourse,courseVo);
+        courseVo.setDescription(eduCourseDescription.getDescription());
+        return courseVo;
+    }
+
+    @Override
+    public String updateCourseInfo(CourseVo courseInfo) {
+
+        EduCourse eduCourse = new EduCourse();
+        BeanUtils.copyProperties(courseInfo,eduCourse);
+        eduCourse.setIsDeleted(0);
+        int update = eduCourseMapper.update(eduCourse,new UpdateWrapper<EduCourse>().eq("id",eduCourse.getId()));
+        if(update==0){
+            throw new EduException(2001,"课程更新失败");
+        }
+
+        String cid = eduCourse.getId();
+        EduCourseDescription eduCourseDescription = new EduCourseDescription();
+        eduCourseDescription.setId(cid);
+        String description = courseInfo.getDescription();
+        eduCourseDescription.setDescription(description);
+        eduCourseDescriptionService.update(eduCourseDescription,new UpdateWrapper<EduCourseDescription>().eq("id",cid));
         return eduCourse.getId();
     }
 }
