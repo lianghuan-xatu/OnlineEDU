@@ -2,4 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xatu.onlineedu.mapper.EduCourseMapper">
 
+    <resultMap id="coursePublishVo" type="com.xatu.onlineedu.entity.vo.CoursePublishVo" autoMapping="true">
+        <result property="lessonNum"  column="lesson_num"></result>
+        <result property="subjectLevelOne"  column="es1title"></result>
+        <result property="subjectLevelTwo"  column="es2title"></result>
+        <result property="teacherName"  column="name"></result>
+    </resultMap>
+    <select id="getPublishCourseInfo"  resultMap="coursePublishVo">
+            select
+            ec.title,
+            ec.cover,
+            ec.lesson_num,
+            ec.price,
+            es1.title as es1title,
+            es2.title as es2title,
+            et.name
+             from
+            edu_course as ec
+            left join edu_teacher as et on ec.teacher_id = et.id
+            left join edu_subject as es1 on ec.subject_parent_id = es1.id
+            left join edu_subject as es2 on ec.subject_id = es2.id
+            where ec.id = #{courseId}
+    </select>
 </mapper>

@@ -56,10 +56,10 @@ public class EduTeacherController {
             queryWrapper.eq("level",level);
         }
         if(!StringUtils.isEmpty(begin)){
-            queryWrapper.ge("begin",begin);
+            queryWrapper.ge("gmt_create",begin);
         }
         if(!StringUtils.isEmpty(end)){
-            queryWrapper.le("end",end);
+            queryWrapper.le("gmt_create",end);
         }
         //排序
         queryWrapper.orderByDesc("gmt_create");

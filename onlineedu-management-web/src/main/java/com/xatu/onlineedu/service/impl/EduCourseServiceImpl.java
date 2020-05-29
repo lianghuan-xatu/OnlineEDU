@@ -3,13 +3,18 @@ package com.xatu.onlineedu.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xatu.onlineedu.entity.EduChapter;
 import com.xatu.onlineedu.entity.EduCourse;
 import com.xatu.onlineedu.entity.EduCourseDescription;
+import com.xatu.onlineedu.entity.EduVideo;
+import com.xatu.onlineedu.entity.vo.CoursePublishVo;
 import com.xatu.onlineedu.entity.vo.CourseVo;
 import com.xatu.onlineedu.exception.EduException;
 import com.xatu.onlineedu.mapper.EduCourseMapper;
+import com.xatu.onlineedu.service.EduChapterService;
 import com.xatu.onlineedu.service.EduCourseDescriptionService;
 import com.xatu.onlineedu.service.EduCourseService;
+import com.xatu.onlineedu.service.EduVideoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +34,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     EduCourseDescriptionService eduCourseDescriptionService;
     @Autowired
     EduCourseMapper eduCourseMapper;
+    @Autowired
+    EduChapterService eduChapterService;
+    @Autowired
+    EduVideoService eduVideoService;
     @Override
     public String saveCourseInfo(CourseVo courseInfoForm)  {
         EduCourse eduCourse = new EduCourse();
@@ -53,7 +62,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         EduCourse eduCourse = eduCourseMapper.selectById(courseId);
         EduCourseDescription eduCourseDescription = eduCourseDescriptionService.getOne(new QueryWrapper<EduCourseDescription>().eq("id", courseId));
         CourseVo courseVo = new CourseVo();
-        BeanUtils.copyProperties(eduCourse,courseVo);
+        try{
+            BeanUtils.copyProperties(eduCourse,courseVo);
+        }catch (Exception e){
+            throw new EduException(2001,"无数据");
+        }
+
         courseVo.setDescription(eduCourseDescription.getDescription());
         return courseVo;
     }
@@ -76,5 +90,24 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         eduCourseDescription.setDescription(description);
         eduCourseDescriptionService.update(eduCourseDescription,new UpdateWrapper<EduCourseDescription>().eq("id",cid));
         return eduCourse.getId();
+    }
+
+    @Override
+    public CoursePublishVo getPublishCourseInfo(String courseId) {
+        return eduCourseMapper.getPublishCourseInfo(courseId);
+    }
+
+    @Override
+    public Boolean removeDataById(String courseId) {
+        try{
+            eduCourseMapper.deleteById(courseId);
+            eduCourseDescriptionService.removeById(courseId);
+            eduChapterService.remove(new QueryWrapper<EduChapter>().eq("course_id",courseId));
+            eduVideoService.remove(new QueryWrapper<EduVideo>().eq("course_id",courseId));
+
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }

@@ -104,7 +104,8 @@ export default {
     page: 1,//当前页    
     limit: 10,
     total: 0,//总记录数   
-    teacherQuery:{}//条件封装对象   
+    teacherQuery:{},//条件封装对象   
+    listLoading: false
 
     }
   
@@ -123,7 +124,7 @@ export default {
           //请求成功   response接口返回数据
           this.list = response.data.rows
           this.total = response.data.total
-
+      
         })
         .catch(erro =>{
           console.log(erro)
