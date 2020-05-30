@@ -36,11 +36,14 @@ public class EduSubjectController {
     }
 
 
+
+
     @GetMapping("/getAllSubject")
     public Result getAllSubject(){
         List<OneSubject> list =eduSubjectService.getAllOneTwoSubject();
         return Result.success().data("list",list);
     }
+
 
 }
 

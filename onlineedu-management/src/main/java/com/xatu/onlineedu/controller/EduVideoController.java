@@ -1,10 +1,14 @@
 package com.xatu.onlineedu.controller;
 
 
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.xatu.onlineedu.entity.EduVideo;
 import com.xatu.onlineedu.exception.EduException;
 import com.xatu.onlineedu.result.Result;
 import com.xatu.onlineedu.service.EduVideoService;
+import com.xatu.onlineedu.util.AliVodInitUtil;
+import com.xatu.onlineedu.util.ConstantVodPropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +42,22 @@ public class EduVideoController {
 
     @DeleteMapping("/deleteVideoInfoById/{videoId}")
     public Result deleteVideoInfoById(@PathVariable String videoId){
+
+        try{
+            EduVideo eduVideo = eduVideoService.getById(videoId);
+            String videoSourceId = eduVideo.getVideoSourceId();
+
+            DefaultAcsClient client = AliVodInitUtil.initVodClient(ConstantVodPropertiesUtil.ACCESS_KEY_ID,ConstantVodPropertiesUtil.ACCESS_KEY_SECRECT);
+            //创建删除视频request对象
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            //向request设置视频id
+            request.setVideoIds(videoSourceId);
+            //调用初始化对象的方法实现删除
+            client.getAcsResponse(request);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         boolean b = eduVideoService.removeById(videoId);
         if(b){
             return Result.success();

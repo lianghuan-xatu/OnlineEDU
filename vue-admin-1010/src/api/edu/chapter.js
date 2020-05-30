@@ -32,5 +32,11 @@ export default {
             method: 'get'
         })
     },
+    removeVideo(videoId) {
+        return request({
+            url: 'eduVod/removeVideo/'+videoId,
+            method: 'delete'
+        })
+    }
 
 }

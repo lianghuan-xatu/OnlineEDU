@@ -1,7 +1,7 @@
 package com.xatu.onlineedu.service.impl;
 
 import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.OSSClient;
 import com.xatu.onlineedu.service.EduOssService;
 import com.xatu.onlineedu.util.ConstantPropertiesUtil;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public class EduOssServiceImpl implements EduOssService {
         String formatDate = simpleDateFormat.format(date);
         String fileName = formatDate+"/"+uuid+file.getOriginalFilename();
         // 创建OSSClient实例
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+        OSS ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         InputStream inputStream = null;
 
         try{
