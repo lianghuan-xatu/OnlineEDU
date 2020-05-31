@@ -11,13 +11,17 @@ import com.xatu.onlineedu.entity.vo.CoursePublishVo;
 import com.xatu.onlineedu.entity.vo.CourseVo;
 import com.xatu.onlineedu.exception.EduException;
 import com.xatu.onlineedu.mapper.EduCourseMapper;
+import com.xatu.onlineedu.mapper.EduVideoMapper;
 import com.xatu.onlineedu.service.EduChapterService;
 import com.xatu.onlineedu.service.EduCourseDescriptionService;
 import com.xatu.onlineedu.service.EduCourseService;
 import com.xatu.onlineedu.service.EduVideoService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -38,6 +42,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     EduChapterService eduChapterService;
     @Autowired
     EduVideoService eduVideoService;
+    @Autowired
+    EduVideoMapper eduVideoMapper;
+
     @Override
     public String saveCourseInfo(CourseVo courseInfoForm)  {
         EduCourse eduCourse = new EduCourse();
@@ -104,6 +111,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
             eduCourseDescriptionService.removeById(courseId);
             eduChapterService.remove(new QueryWrapper<EduChapter>().eq("course_id",courseId));
             eduVideoService.remove(new QueryWrapper<EduVideo>().eq("course_id",courseId));
+            List<EduVideo> eduVideos = eduVideoMapper.selectList(new QueryWrapper<EduVideo>().eq("course_id", courseId).select("id"));
+            for (EduVideo eduVideo : eduVideos) {
+                String id = eduVideo.getId();
+                if(StringUtils.isNotEmpty(id)){
+                    eduVideoService.deleteVideoInfoById(id);
+                }
+            }
 
         }catch (Exception e){
             return false;

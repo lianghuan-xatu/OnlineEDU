@@ -3,13 +3,17 @@ package com.xatu.onlineedu.service.impl;
 import com.aliyun.vod.upload.impl.UploadVideoImpl;
 import com.aliyun.vod.upload.req.UploadStreamRequest;
 import com.aliyun.vod.upload.resp.UploadStreamResponse;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xatu.onlineedu.entity.EduVideo;
 import com.xatu.onlineedu.exception.EduException;
 import com.xatu.onlineedu.mapper.EduVideoMapper;
 import com.xatu.onlineedu.service.EduVideoService;
+import com.xatu.onlineedu.util.AliVodInitUtil;
 import com.xatu.onlineedu.util.ConstantPropertiesUtil;
+import com.xatu.onlineedu.util.ConstantVodPropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -71,6 +75,32 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
             throw new EduException(20001, " vod 服务上传失败");
 
         }
+    }
+
+    @Override
+    public Boolean deleteVideoInfoById(String videoId) {
+
+        try{
+            EduVideo eduVideo = eduVideoMapper.selectById(videoId);
+            String videoSourceId = eduVideo.getVideoSourceId();
+
+            DefaultAcsClient client = AliVodInitUtil.initVodClient(ConstantVodPropertiesUtil.ACCESS_KEY_ID,ConstantVodPropertiesUtil.ACCESS_KEY_SECRECT);
+            //创建删除视频request对象
+            DeleteVideoRequest request = new DeleteVideoRequest();
+            //向request设置视频id
+            request.setVideoIds(videoSourceId);
+            //调用初始化对象的方法实现删除
+            client.getAcsResponse(request);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        int i = eduVideoMapper.deleteById(videoId);
+        if(i>0){
+            return true;
+        }
+
+        return false;
     }
 
 }
