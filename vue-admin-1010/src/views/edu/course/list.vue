@@ -134,7 +134,7 @@ export default {
           //请求成功   response接口返回数据
           this.list = response.data.rows
           this.total = response.data.total
-          this.courseQuery = {}
+       
 
         })
         .catch(erro =>{

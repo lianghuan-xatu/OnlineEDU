@@ -11,7 +11,7 @@
     </el-steps>
 
     <el-form label-width="120px">
-
+ 
       <el-form-item>
      <el-button type="text" @click="dialogChapterFormVisible = true">添加章节</el-button>
 <!-- 章节 -->
@@ -326,6 +326,7 @@ editVideo(videoId) {
   this.dialogVideoFormVisible = true
   video.getVideoInfoById(videoId).then(response => {
     this.video = response.data.item
+   
   })
 }
 ,
