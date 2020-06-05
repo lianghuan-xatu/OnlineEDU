@@ -71,6 +71,13 @@ public class EduCourseController {
         return Result.fail();
     }
 
+    /**
+     * 根据条件分页查询课程
+     * @param page
+     * @param limit
+     * @param courseQueryVo
+     * @return
+     */
     @PostMapping("/getCourseListPage/{page}/{limit}")
     public Result getCourseListPage(@PathVariable long page, @PathVariable long limit, @RequestBody CourseQueryVo courseQueryVo){
         Page queryPage = new Page();
@@ -105,6 +112,20 @@ public class EduCourseController {
             return Result.success();
         }
         return Result.fail();
+    }
+
+    /**
+     * Index页面获取课程数据
+     * @return
+     */
+    @GetMapping("/getFrontCourseList")
+    @ResponseBody
+    public Result getFrontCourseList () {
+        QueryWrapper<EduCourse>  queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("gmt_create");
+        queryWrapper.last("limit 8");
+        List<EduCourse> list = eduCourseService.list(queryWrapper);
+        return Result.success().data("courseList",list);
     }
 
 

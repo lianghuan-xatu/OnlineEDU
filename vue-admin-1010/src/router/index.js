@@ -145,10 +145,38 @@ export const constantRouterMap = [
         meta: { title: 'Banner添加', icon: 'tree' }
       },
       {
-        path: 'edit/：id',
+        path: 'edit/:id',
         name: 'Banner编辑',
         component: () => import('@/views/edu/banner/save'),
         meta: { title: 'Banner编辑', icon: 'tree' },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/student',
+    component: Layout,
+    redirect: '/student/table',
+    name: '学生管理',
+    meta: { title: '学生管理', icon: 'example' },
+    children: [
+      {
+        path: 'table',
+        name: '学生列表',
+        component: () => import('@/views/edu/student/list'),
+        meta: { title: '学生列表', icon: 'table' }
+      },
+      {
+        path: 'save',
+        name: '添加学生',
+        component: () => import('@/views/edu/student/save'),
+        meta: { title: '添加学生', icon: 'tree' }
+      },
+      {
+        path: 'edit/:id',
+        name: '编辑学生',
+        component: () => import('@/views/edu/student/save'),
+        meta: { title: '编辑学生', noCache: true },
         hidden: true
       }
     ]

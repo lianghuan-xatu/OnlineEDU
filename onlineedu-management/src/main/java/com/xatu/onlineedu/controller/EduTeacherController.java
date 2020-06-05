@@ -130,6 +130,21 @@ public class EduTeacherController {
     }
 
 
+    /**
+     * Index页面获取讲师数据
+     * @return
+     */
+    @GetMapping("/getFrontTeacherList")
+    @ResponseBody
+    public Result getFrontTeacherList () {
+        QueryWrapper<EduTeacher>  queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("gmt_create");
+        queryWrapper.last("limit 4");
+        List<EduTeacher> list = eduTeacherService.list(queryWrapper);
+        return Result.success().data("teacherList",list);
+    }
+
+
 
 
 }
