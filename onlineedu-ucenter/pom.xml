@@ -8,9 +8,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.xatu.onlineedu</groupId>
-    <artifactId>onlineedu-cms</artifactId>
+    <artifactId>onlineedu-ucenter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>onlineedu-cms</name>
+    <name>onlineedu-ucenter</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -18,7 +18,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>com.xatu.onlineedu</groupId>
             <artifactId>onlineedu-api</artifactId>
@@ -35,7 +34,8 @@
             <artifactId>onlineedu-service-util</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
+
+
 
 </project>

@@ -1,7 +1,7 @@
 package com.xatu.onlineedu.service;
 
-import com.xatu.onlineedu.entity.EduStudent;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xatu.onlineedu.entity.EduStudent;
 
 /**
  * <p>

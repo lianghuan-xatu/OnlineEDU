@@ -27,7 +27,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         // String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir("D:\\IDEA WORKSPACE4\\OnlineEDU\\onlineedu-management\\src\\main\\java");
+        gc.setOutputDir("D:\\IDEA WORKSPACE4\\OnlineEDU\\onlineedu-ucenter\\src\\main\\java");
         gc.setAuthor("LiangHuan");
         gc.setOpen(false);
         gc.setFileOverride(false);
@@ -73,7 +73,7 @@ public class CodeGenerator {
     /* 公共父类
      strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");// 写于父类中的公共字段
      strategy.setSuperEntityColumns("id");*/
-        strategy.setInclude("");  //设置要要映射的表名
+        strategy.setInclude("ucenter_member");  //设置要要映射的表名
 
    /* strategy.setControllerMappingHyphenStyle(true);
     mpg.setTemplateEngine(new FreemarkerTemplateEngine());*/

@@ -28,7 +28,7 @@ import java.util.List;
  * 课程 服务实现类
  * </p>
  *
- * @author LiangHuan
+ * @author
  * @since 2020-05-18
  */
 @Service
