@@ -68,13 +68,14 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         Map<String,Object> userMap = new HashMap<>();
         userMap.put("memberId",memberId);
         userMap.put("nickName",nickName);
-        String ip = request.getHeader("x-forwarded-for");//通过nginx转发的获得的客户端ip
+        String ip ="localhost";
+        /*String ip = request.getHeader("x-forwarded-for");//通过nginx转发的获得的客户端ip
         if(StringUtils.isBlank(ip)){
             ip = request.getRemoteAddr();//从request中的ip
             if(StringUtils.isBlank(ip)){
                 ip = "localhost";
             }
-        }
+        }*/
         //按照设计的算法对参数进行加密，生成token
         String token = JwtUtil.encode("onlineedu",userMap,ip);
         return token;
@@ -121,5 +122,10 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
             return true;
         }
         return false;
+    }
+
+    @Override
+    public UcenterMember getByOpenid(String openid) {
+        return ucenterMemberMapper.selectOne(new QueryWrapper<UcenterMember>().eq("openid",openid));
     }
 }

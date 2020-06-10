@@ -27,38 +27,39 @@
             </router-link>
           </ul>
           <!-- / nav -->
-          <ul class="h-r-login">
-            <li id="no-login">
-              <a href="/sing_in" title="登录">
-                <em class="icon18 login-icon">&nbsp;</em>
-                <span class="vam ml5">登录</span>
-              </a>
-              |
-              <a href="/sign_up" title="注册">
-                <span class="vam ml5">注册</span>
-              </a>
-            </li>
-            <li class="mr10 undis" id="is-login-one">
-              <a href="#" title="消息" id="headerMsgCountId">
-                <em class="icon18 news-icon">&nbsp;</em>
-              </a>
-              <q class="red-point" style="display: none">&nbsp;</q>
-            </li>
-            <li class="h-r-user undis" id="is-login-two">
-              <a href="#" title>
-                <img
-                  src="~/assets/img/avatar-boy.gif"
-                  width="30"
-                  height="30"
-                  class="vam picImg"
-                  alt
-                >
-                <span class="vam disIb" id="userName"></span>
-              </a>
-              <a href="javascript:void(0)" title="退出" onclick="exit();" class="ml5">退出</a>
-            </li>
-            <!-- /未登录显示第1 li；登录后显示第2，3 li -->
-          </ul>
+    <!-- / nav -->
+<ul class="h-r-login">
+    <li v-if="!loginInfo.id" id="no-login">
+        <a href="/login" title="登录">
+            <em class="icon18 login-icon">&nbsp;</em>
+            <span class="vam ml5">登录</span>
+        </a>
+        |
+        <a href="/register" title="注册">
+            <span class="vam ml5">注册</span>
+        </a>
+    </li>
+    <li v-if="loginInfo.id" id="is-login-one" class="mr10">
+        <a id="headerMsgCountId" href="#" title="消息">
+            <em class="icon18 news-icon">&nbsp;</em>
+        </a>
+        <q class="red-point" style="display: none">&nbsp;</q>
+    </li>
+    <li v-if="loginInfo.id" id="is-login-two" class="h-r-user">
+        <a href="/ucenter" title>
+            <img
+                 :src="loginInfo.avatar"
+                 width="30"
+                 height="30"
+                 class="vam picImg"
+                 alt
+                 >
+            <span id="userName" class="vam disIb">{{ loginInfo.nickname }}</span>
+        </a>
+        <a href="javascript:void(0);" title="退出" @click="logout()" class="ml5">退出</a>
+    </li>
+    <!-- /未登录显示第1 li；登录后显示第2，3 li -->
+</ul>
           <aside class="h-r-search">
             <form action="#" method="post">
               <label class="h-r-s-box">
@@ -106,7 +107,7 @@
                 <span>Email：lianghuan18391713434@gmail.com</span>
               </section>
               <section class="b-f-link mt10">
-                <span>©2018课程版权均归XATU在线教育平台所有 京ICP备17055252号</span>
+                <span>©2018课程版权均归XATU在线教育平台所有 京ICP备17056252号</span>
               </section>
             </section>
           </section>
@@ -128,12 +129,70 @@
     </footer>
     <!-- /公共底引入 -->
   </div>
-</template>
-<script>
+</template><script>
 import "~/assets/css/reset.css";
 import "~/assets/css/theme.css";
 import "~/assets/css/global.css";
 import "~/assets/css/web.css";
 
-export default {};
+import cookie from 'js-cookie'
+import userApi from '@/api/login'
+
+export default {
+  data() {
+    return {
+      token: '',
+      loginInfo: {
+        id: '',
+        age: '',
+        avatar: '',
+        mobile: '',
+        nickname: '',
+        sex: ''
+      }
+    }
+  },
+
+  created() {
+    
+    console.log(this.$route.query.token)
+    this.token = this.$route.query.token
+    if(this.token) {
+      this.wxLogin() 
+    }
+    this.showInfo()
+  },
+
+  methods: {
+    showInfo() {
+      //debugger
+      var jsonStr = cookie.get("guli_ucenter");
+      //alert(jsonStr)
+      if (jsonStr) {
+        console.log(jsonStr)
+        this.loginInfo = JSON.parse(jsonStr)
+        console.log(this.loginInfo.id)
+      }
+    },
+
+    logout() {
+      //debugger
+      cookie.set('guli_ucenter', "", {domain: 'localhost'})
+      cookie.set('guli_token', "", {domain: 'localhost'})
+
+      //跳转页面 
+      window.location.href = "/"
+    },
+    wxLogin() {
+      if(this.token == '') return
+      cookie.set('guli_token',this.token,{domain:'localhost'})
+      cookie.set('guli_ucenter','',{domain:'localhost'})
+      //用户登陆成功  根据token获取用户信息  
+      userApi.getLoginInfo().then(response =>{
+        this.loginInfo = response.data.data.item
+        cookie.set('guli_ucenter',this.loginInfo,{domain:'localhost'})
+      })
+    }
+  }
+}
 </script>

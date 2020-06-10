@@ -21,4 +21,6 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     void registerUser(RegisterVo registerVo);
 
     boolean isExistMobile(String mobile);
+
+    UcenterMember getByOpenid(String openid);
 }

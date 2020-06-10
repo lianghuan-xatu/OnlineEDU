@@ -1,7 +1,6 @@
 package com.xatu.onlineedu.controller;
 
 
-import com.alibaba.fastjson.JSON;
 import com.xatu.onlineedu.entity.UcenterMember;
 import com.xatu.onlineedu.entity.vo.RegisterVo;
 import com.xatu.onlineedu.result.Result;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -47,22 +45,22 @@ public class UcenterMemberController {
 
     //token验证
     @GetMapping("/getMemberInfoByToken")
-    public String getMemberInfoByToken(String token,String currentIp) {
+    public Result getMemberInfoByToken(HttpServletRequest request) {
         //通过jwt校验token真假
         //通过jwt校验token真假
-        Map<String,String> map = new HashMap<>();
+        UcenterMember ucenterMember;
+        String token = request.getHeader("token");
         Map<String, Object> decode = null;
-        if(StringUtils.isNotBlank(token)&&StringUtils.isNotBlank(currentIp)){
-            decode = JwtUtil.decode(token, "onlineedu", currentIp);
+        if(StringUtils.isNotBlank(token)){
+            decode = JwtUtil.decode(token, "onlineedu", "localhost");
         }
         if(decode!=null){
-            map.put("status","success");
-            map.put("memberId",decode.get("memberId").toString());
-            map.put("nickName",decode.get("nickName").toString());
+            String memberId = decode.get("memberId").toString();
+            ucenterMember = ucenterMemberService.getById(memberId);
         }else{
-            map.put("status","fail");
+            return Result.success().data("item","");
         }
-        return JSON.toJSONString(map);
+        return Result.success().data("item",ucenterMember);
     }
 
 }
