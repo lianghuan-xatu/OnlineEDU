@@ -68,4 +68,9 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         }
         return false;
     }
+
+    @Override
+    public List<ChapterVo> nestedList(String courseId) {
+        return null;
+    }
 }

@@ -19,4 +19,6 @@ public interface EduChapterService extends IService<EduChapter> {
     List<ChapterVo> getNestedListByCourseId(String courseId);
 
     boolean removeChapterById(String chapterId);
+
+    List<ChapterVo> nestedList(String courseId);
 }

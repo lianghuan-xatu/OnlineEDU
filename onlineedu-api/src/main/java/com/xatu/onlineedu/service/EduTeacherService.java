@@ -1,7 +1,10 @@
 package com.xatu.onlineedu.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xatu.onlineedu.entity.EduTeacher;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.xatu.onlineedu.entity.EduTeacher;
  */
 public interface EduTeacherService extends IService<EduTeacher> {
 
+    Map<String, Object> pageList(Page<EduTeacher> teacherPage);
 }
