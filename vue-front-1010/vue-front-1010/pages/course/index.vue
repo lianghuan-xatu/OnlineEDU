@@ -18,8 +18,8 @@
                 <li>
                   <a title="全部" href="#">全部</a>
                 </li>
-                <li v-for="item in subjectNestedList" :key="item.id">
-                  <a :title="item.title" href="#">{{item.title}}</a>
+                <li v-for="(item,index) in subjectNestedList" :key="item.id" :class="{active:oneIndex == index}">
+                  <a :title="item.title" href="javascript:void(0)" @click="searchOne(item.id,index)">{{item.title}}</a>
                 </li>
                 
               </ul>
@@ -47,21 +47,25 @@
               <i class="c-666 f-fM">1</i>
             </span>
           </section>
-          <section class="fl">
-            <ol class="js-tap clearfix">
-              <li>
-                <a title="关注度" href="#">关注度</a>
-              </li>
-              <li>
-                <a title="最新" href="#">最新</a>
-              </li>
-              <li class="current bg-orange">
-                <a title="价格" href="#">价格&nbsp;
-                  <span>↓</span>
-                </a>
-              </li>
-            </ol>
-          </section>
+     <section class="fl">
+  <ol class="js-tap clearfix">
+    <li :class="{'current bg-orange':buyCountSort!=''}">
+      <a title="销量" href="javascript:void(0);" @click="searchBuyCount()">销量
+      <span :class="{hide:buyCountSort==''}">↓</span>
+      </a>
+    </li>
+    <li :class="{'current bg-orange':gmtCreateSort!=''}">
+      <a title="最新" href="javascript:void(0);" @click="searchGmtCreate()">最新
+      <span :class="{hide:gmtCreateSort==''}">↓</span>
+      </a>
+    </li>
+    <li :class="{'current bg-orange':priceSort!=''}">
+      <a title="价格" href="javascript:void(0);" @click="searchPrice()">价格&nbsp;
+        <span :class="{hide:priceSort==''}">↓</span>
+      </a>
+    </li>
+  </ol>
+</section>
         </div>
         <div class="mt40">
           <!-- /无数据提示 开始-->
@@ -86,7 +90,7 @@
                     <a :href="'/course/'+item.id" :title="item.title" class="comm-btn c-btn-1">{{item.title}}</a>
                   </h3>
                   <section class="mt10 hLh20 of">
-                    <span class="fr jgTag bg-green">
+                    <span v-if="Number(item.price) === 0" class="fr jgTag bg-green">
                       <i class="c-fff fsize12 f-fA">免费</i>
                     </span>
                     <span class="fl jgAttr c-ccc f-fA">
@@ -104,18 +108,39 @@
             <div class="clear"></div>
           </article>
         </div>
-        <!-- 公共分页 开始 -->
-        <div>
-          <div class="paging">
-            <a class="undisable" title>首</a>
-            <a id="backpage" class="undisable" href="#" title>&lt;</a>
-            <a href="#" title class="current undisable">1</a>
-            <a href="#" title>2</a>
-            <a id="nextpage" href="#" title>&gt;</a>
-            <a href="#" title>末</a>
-            <div class="clear"></div>
-          </div>
-        </div>
+      
+  <div class="paging">
+    <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
+    <a
+      :class="{undisable: !data.hasPrevious}"
+      href="#"
+      title="首页"
+      @click.prevent="gotoPage(1)">首</a>
+    <a
+      :class="{undisable: !data.hasPrevious}"
+      href="#"
+      title="前一页"
+      @click.prevent="gotoPage(data.current-1)">&lt;</a>
+    <a
+      v-for="page in data.pages"
+      :key="page"
+      :class="{current: data.current == page, undisable: data.current == page}"
+      :title="'第'+page+'页'"
+      href="#"
+      @click.prevent="gotoPage(page)">{{ page }}</a>
+    <a
+      :class="{undisable: !data.hasNext}"
+      href="#"
+      title="后一页"
+      @click.prevent="gotoPage(data.current+1)">&gt;</a>
+    <a
+      :class="{undisable: !data.hasNext}"
+      href="#"
+      title="末页"
+      @click.prevent="gotoPage(data.pages)">末</a>
+    <div class="clear"/>
+  </div>
+
         <!-- 公共分页 结束 -->
       </section>
     </section>
@@ -161,7 +186,7 @@ export default {
     initSubject(){
       //debugger
       course.getNestedTreeList2().then(response => {
-        this.subjectNestedList = response.data.data.resultMap.items
+        this.subjectNestedList = response.data.data.list
       })
     },
     
@@ -179,9 +204,9 @@ export default {
 
       for (let i = 0; i < this.subjectNestedList.length; i++) {
         if (this.subjectNestedList[i].id === subjectParentId) {
-          this.subSubjectList = this.subjectNestedList[i].children
-        }
-      }
+          this.subSubjectList = this.subjectNestedList[i].twoSubjectList
+      } 
+    }
     },
 
     //点击二级分类，查询数据

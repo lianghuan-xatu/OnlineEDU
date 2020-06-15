@@ -21,7 +21,7 @@ public class EduComment implements Serializable {
     /**
      * 讲师ID
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ID_WORKER_STR)
     private String id;
 
     /**

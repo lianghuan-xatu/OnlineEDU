@@ -7,7 +7,7 @@ OnlineEdu(在线教育)，是一个B2C模式的职业技能在线教育系统，
 * onlineedu-management后台管理模块   端口：8083
 * onlineedu-cms前台内容模块   端口：8084
 * onlineedu-ucenter用户模块   端口：8150
-
+* onlineedu-order订单模块   端口：8085
 
 
 

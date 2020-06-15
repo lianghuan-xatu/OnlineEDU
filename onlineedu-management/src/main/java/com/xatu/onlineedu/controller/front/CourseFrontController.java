@@ -1,7 +1,6 @@
 package com.xatu.onlineedu.controller.front;
 
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xatu.onlineedu.entity.EduCourse;
 import com.xatu.onlineedu.entity.vo.ChapterVo;
@@ -19,7 +18,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/eduFrontCourse")
-public class eduFrontCourseController {
+public class CourseFrontController {
 
     @Autowired
     EduCourseService eduCourseService;
@@ -44,7 +43,7 @@ public class eduFrontCourseController {
         //查询课程信息和讲师信息
         CourseWebVo courseWebVo = eduCourseService.selectInfoWebById(courseId);
         //查询当前课程的章节信息
-        List<ChapterVo> chapterVoList = chapterService.nestedList(courseId);
+        List<ChapterVo> chapterVoList = chapterService.getNestedListByCourseId(courseId);
 
         return Result.success().data("course", courseWebVo).data("chapterVoList", chapterVoList);
     }

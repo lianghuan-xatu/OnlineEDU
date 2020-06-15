@@ -3,6 +3,7 @@ package com.xatu.onlineedu.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xatu.onlineedu.entity.EduCourse;
 import com.xatu.onlineedu.entity.vo.CoursePublishVo;
+import com.xatu.onlineedu.entity.vo.CourseWebVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,6 @@ import org.springframework.stereotype.Repository;
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
 
     CoursePublishVo getPublishCourseInfo(String courseId);
+
+    CourseWebVo selectInfoWebById(String courseId);
 }

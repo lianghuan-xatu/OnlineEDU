@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 2020-05-16
  */
 @Controller
-@RequestMapping("/onlineedu/eduComment")
+@RequestMapping("/eduComment")
 public class EduCommentController {
+
+
+
 
 }
 

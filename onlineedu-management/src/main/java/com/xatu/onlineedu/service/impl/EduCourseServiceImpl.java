@@ -11,6 +11,7 @@ import com.xatu.onlineedu.entity.EduVideo;
 import com.xatu.onlineedu.entity.vo.CourseFrontQueryVo;
 import com.xatu.onlineedu.entity.vo.CoursePublishVo;
 import com.xatu.onlineedu.entity.vo.CourseVo;
+import com.xatu.onlineedu.entity.vo.CourseWebVo;
 import com.xatu.onlineedu.exception.EduException;
 import com.xatu.onlineedu.mapper.EduCourseMapper;
 import com.xatu.onlineedu.mapper.EduVideoMapper;
@@ -184,6 +185,21 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
             return map;
         }
+
+    @Override
+    public CourseWebVo selectInfoWebById(String courseId) {
+            this.updatePageViewCount(courseId);
+            return baseMapper.selectInfoWebById(courseId);
+    }
+
+
+    @Override
+    public void updatePageViewCount(String id) {
+        EduCourse eduCourse = baseMapper.selectById(id);
+        eduCourse.setViewCount(eduCourse.getViewCount() + 1);
+        baseMapper.updateById(eduCourse);
+    }
+
 
 
 }

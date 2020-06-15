@@ -62,6 +62,15 @@ public class UcenterMemberController {
         }
         return Result.success().data("item",ucenterMember);
     }
+    /**
+     * 根据用户id获取用户信息
+     */
+    @GetMapping("/getMemberInfoByMemberId/{memberId}")
+    public UcenterMember getMemberInfoByMemberId(@PathVariable String memberId) {
+        UcenterMember ucenterMember = ucenterMemberService.getById(memberId);
+        return ucenterMember;
+    }
+
 
 }
 

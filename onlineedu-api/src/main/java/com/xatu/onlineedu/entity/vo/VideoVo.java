@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class VideoVo implements Serializable {
     private String id;
     private String title;
+    private String videoSourceId;
     private Boolean isFree;
 
     public String getId() {
@@ -29,5 +30,13 @@ public class VideoVo implements Serializable {
 
     public void setFree(Boolean free) {
         isFree = free;
+    }
+
+    public String getVideoSourceId() {
+        return videoSourceId;
+    }
+
+    public void setVideoSourceId(String videoSourceId) {
+        this.videoSourceId = videoSourceId;
     }
 }
