@@ -34,9 +34,12 @@
                     <a class="c-fff vam" title="收藏" href="#" >收藏</a>
                 </span>
             </section>
-            <section class="c-attr-mt">
-                <a href="#" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
-            </section>
+            <section v-if="isbuyCourse || Number(course.price)===0" class="c-attr-mt">
+              <a href="#" title="立即观看" class="comm-btn c-btn-3" >立即观看</a>
+</section>
+<section v-else class="c-attr-mt">
+    <a href="#" title="立即购买" class="comm-btn c-btn-3" @click="createOrders()">立即购买</a>
+</section>
         </section>
     </aside>
     <aside class="thr-attr-box">
@@ -260,6 +263,7 @@
 <script>
 import course from '@/api/edu/course'
 import comment from '@/api/edu/comment'
+import order from '@/api/edu/order'
 export default {
 
      //和页面异步开始的
@@ -294,7 +298,7 @@ export default {
             .then(response => {
               this.course=response.data.data.course
               this.chapterList=response.data.data.chapterList
-              this.isbuyCourse=response.data.data.isbuyCourse
+              this.isbuyCourse=response.data.data.isbuy
             })
     },
 
@@ -317,8 +321,16 @@ export default {
           comment.getPageList(page, this.limit,this.courseId).then(response => {
               this.data = response.data.data.resultMap
           })
-      }
-  }
+      },
+ 
+  createOrders() {
+      order.createOrder(this.courseId)
+      .then(response =>{
+        //获取返回订单号 
+        //生成订单之后，跳转订单显示页面
+        this.$router.push({path:'/orders/'+response.data.data.orderId})
+      })
+  } },
   
 };
 </script>

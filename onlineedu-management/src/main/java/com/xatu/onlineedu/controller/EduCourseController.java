@@ -129,6 +129,13 @@ public class EduCourseController {
     }
 
 
+    @GetMapping("/getRemoteCourseInfoByCourseId/{courseId}")
+    public CourseVo getRemoteCourseInfoByCourseId(@PathVariable String courseId){
+        CourseVo eduCourseVo = eduCourseService.getCoursInfoByCourseId(courseId);
+        return eduCourseVo;
+    }
+
+
 
 
 }

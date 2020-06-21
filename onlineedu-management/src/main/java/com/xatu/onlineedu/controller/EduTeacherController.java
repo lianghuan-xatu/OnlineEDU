@@ -145,6 +145,13 @@ public class EduTeacherController {
     }
 
 
+    @GetMapping("/getRemoteTeacher/{id}")
+    @ResponseBody
+    public EduTeacher getRemoteTeacher(@PathVariable String id){
+        EduTeacher eduTeacher = eduTeacherService.getById(id);
+        return eduTeacher;
+    }
+
 
 
 }
