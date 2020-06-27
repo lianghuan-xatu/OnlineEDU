@@ -71,6 +71,15 @@ public class UcenterMemberController {
         return ucenterMember;
     }
 
+    /**
+     * 统计每天注册人数
+     */
+    @GetMapping(value = "/registerCount/{day}")
+    public Result registerCount(@PathVariable String day){
+        Integer count = ucenterMemberService.countRegisterByDay(day);
+        return Result.success().data("countRegister",count);
+    }
+
 
 }
 

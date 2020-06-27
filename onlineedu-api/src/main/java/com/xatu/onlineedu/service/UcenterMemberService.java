@@ -23,4 +23,6 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     boolean isExistMobile(String mobile);
 
     UcenterMember getByOpenid(String openid);
+
+    Integer countRegisterByDay(String day);
 }

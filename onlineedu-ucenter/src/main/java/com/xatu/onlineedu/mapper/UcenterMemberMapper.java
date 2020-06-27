@@ -16,4 +16,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UcenterMemberMapper extends BaseMapper<UcenterMember> {
+    Integer countRegisterByDay(String day);
 }
