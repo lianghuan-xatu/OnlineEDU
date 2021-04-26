@@ -33,7 +33,7 @@
         <aliyun.oss.version>2.8.3</aliyun.oss.version>
         <jodatime.version>2.10.1</jodatime.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <aliyun-java-sdk-core.version>4.3.3</aliyun-java-sdk-core.version>
         <aliyun-sdk-oss.version>3.1.0</aliyun-sdk-oss.version>
         <aliyun-java-sdk-vod.version>2.15.2</aliyun-java-sdk-vod.version>
