@@ -26,7 +26,7 @@
         <jedis.version>2.9.0</jedis.version>
         <jest.version>5.3.3</jest.version>
         <jna.version>4.5.1</jna.version>
-        <beanUtils.version>1.9.3</beanUtils.version>
+        <beanUtils.version>1.9.4</beanUtils.version>
         <mybatisplus-generator.version>3.3.1.tmp</mybatisplus-generator.version>
         <apache-velocity.version>2.2</apache-velocity.version>
         <mybatisplus.version>3.3.1.tmp</mybatisplus.version>
